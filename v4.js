@@ -1,42 +1,9 @@
-var Discord = require('discord.js');
-var logger = require('winston');
-var auth = require('./auth.json');
-var moment = require('moment-timezone');
+const Discord = require('discord.js');
+const logger = require('winston');
+const auth = require('./auth.json');
+const moment = require('moment-timezone');
+const fs = require('fs');
 
-var list = [
-    {
-        "ID": "普一",
-        "Time": "16:38"
-    },
-    {
-        "ID":"普二",
-        "Time": "15:05"
-    },
-    {
-        "ID":"普三",
-        "Time": "01:01"
-    },
-    {
-        "ID":"普四",
-        "Time": "14:53"
-    },
-    {
-        "ID":"次一",
-        "Time": "14:59"
-    },
-    {
-        "ID":"次二",
-        "Time": "16:57"
-    },
-    {
-        "ID":"次三",
-        "Time": "17:11"
-    },
-    {
-        "ID":"次四",
-        "Time": "15:09"
-    }
-]
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -52,65 +19,76 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
-    var formattedDate
+    let list = JSON.parse(fs.readFileSync('purpleBoss.json'));
+
     switch (msg.content){
         case 'p1': 
             formattedDate = moment().add(240, "minutes")
-                .tz(Date.now.toString())
-                .format("HH:mm");
+                .tz("Asia/Taipei")
+                .format();
             list[0].Time = formattedDate;
-            msg.reply(list[0].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[0].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
             break;
         case 'p2':
              formattedDate = moment().add(230, "minutes")
-            .tz(Date.now.toString())
-            .format("HH:mm");
+            .tz("Asia/Taipei")
+            .format();
             list[1].Time = formattedDate;
-            msg.reply(list[1].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[1].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
         break;
         case 'p3':
              formattedDate = moment().add(240, "minutes")
-            .tz(Date.now.toString())
-            .format("HH:mm");
+            .tz("Asia/Taipei")
+            .format();
             list[2].Time = formattedDate;
-            msg.reply(list[2].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[2].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
         break;
         case 'p4':
              formattedDate = moment().add(250, "minutes")
-            .tz(Date.now.toString())
-            .format("HH:mm");
+            .tz("Asia/Taipei")
+            .format();
             list[3].Time = formattedDate;
-            msg.reply(list[3].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[3].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
         break;
         case 'p5':
              formattedDate = moment().add(230, "minutes")
-            .tz(Date.now.toString())
-            .format("HH:mm");
+            .tz("Asia/Taipei")
+            .format();
             list[4].Time = formattedDate;
-            msg.reply(list[4].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[4].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
         break;
         case 'p6':
              formattedDate = moment().add(240, "minutes")
-            .tz(Date.now.toString())
-            .format("HH:mm");
+            .tz("Asia/Taipei")
+            .format();
             list[5].Time = formattedDate;
-            msg.reply(list[5].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[5].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
         break;
         case 'p7':
              formattedDate = moment().add(240, "minutes")
-            .tz(Date.now.toString())
-            .format("HH:mm");
+            .tz("Asia/Taipei")
+            .format();
             list[6].Time = formattedDate;
-            msg.reply(list[6].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[6].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
         break;
         case 'p8':
              formattedDate = moment().add(250, "minutes")
-            .tz(Date.now.toString())
-            .format("HH:mm");
+            .tz("Asia/Taipei")
+            .format();
             list[7].Time = formattedDate;
-            msg.reply(list[7].ID+" "+formattedDate + " 重生");
+            fs.writeFileSync('purpleBoss.json', JSON.stringify(list));
+            msg.reply(list[7].ID+" "+ moment(formattedDate).format('HH:mm') + " 重生");
         break;
         case 'all':
+            let oldList = list;
+            var purpleBossStr = "";
             list.forEach(element => {
                 element.Time = moment(element.Time, 'HH:mm');
             });
@@ -118,9 +96,12 @@ bot.on('message', msg => {
 
             list.forEach(element =>{
                 element.Time = moment(element.Time).format('HH:mm');
+                purpleBossStr += element.ID + " " + element.Time + "。"
             })
 
-            msg.reply(JSON.stringify(list));
-            
+            msg.reply(purpleBossStr);
+
+            list = oldList
+        break;
     }
 });
