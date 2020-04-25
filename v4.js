@@ -1,8 +1,20 @@
+const http = require("http");
+const express = require("express");
+const request = require("request");
+const app = express();
+app.get("/", (req, response) => {
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
+
 const Discord = require('discord.js');
 const logger = require('winston');
-const auth = require('./auth.json');
 const moment = require('moment-timezone');
 const fs = require('fs');
+const token = process.env.TOKEN;
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -12,7 +24,7 @@ logger.add(new logger.transports.Console, {
 logger.level = "debug";
 // Initialize Discord Bot
 var bot = new Discord.Client();
-bot.login(auth.token);
+bot.login(token);
 
 bot.on('ready', () => {
     logger.info("login success");
@@ -20,7 +32,7 @@ bot.on('ready', () => {
 
 bot.on('message', msg => {
     let list = JSON.parse(fs.readFileSync('purpleBoss.json'));
-
+    var formattedDate;
     switch (msg.content){
         case 'p1': 
             formattedDate = moment().add(240, "minutes")
