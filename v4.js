@@ -31,7 +31,7 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
-    let list = JSON.parse(fs.readFileSync('purpleBoss.json'));
+    let list = JSON.parse(fs.readFileSync('./purpleBoss.json'));
     var formattedDate;
     switch (msg.content){
         case 'p1': 
@@ -101,9 +101,6 @@ bot.on('message', msg => {
         case 'all':
             let oldList = list;
             var purpleBossStr = "";
-            list.forEach(element => {
-                element.Time = moment(element.Time, 'HH:mm');
-            });
             list.sort((a,b) => new Date(a.Time).getTime() - new Date(b.Time).getTime());
 
             list.forEach(element =>{
