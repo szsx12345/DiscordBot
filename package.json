@@ -12,7 +12,7 @@
 		"discord.io": "^2.5.3",
 		"discord.js": "^12.2.0",
 		"moment": "^2.24.0",
-		"moment-timezone": "^0.5.27",
+		"moment-timezone": "^0.5.35",
 		"winston": "^3.2.1",
 		"express": "^4.17.1",
 		"request": "^2.88.2"
